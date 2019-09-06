@@ -6,7 +6,7 @@ public class EnemyBase : MonoBehaviour
 {
     public void KillPlayer()
     {
-        RoomManager rm = GetComponentInParent<RoomManager>();
+        RoomManager rm = FindObjectOfType<RoomManager>();
         rm.SpawnPlayer(rm.ActiveRoom.SpawnPoint);
     }
 }
