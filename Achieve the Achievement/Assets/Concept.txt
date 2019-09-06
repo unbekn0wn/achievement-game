@@ -1,0 +1,47 @@
+x amount of seconds to live
+earning achievements extends the time
+survive as long as possible
+2d side scrolling
+
+achievement templates that get randomly merged into level rooms
+level 'boxes' with each their own achievements
+tiered achievements (collect 1 hidden coin then 5 then 10 etc.)
+skip rooms at a cost of x seconds
+
+Achievement templates:
+
+Major:
+Kill all enemies in the room.
+Solve the puzzle in the room
+Get to a hard to reach position.
+
+Minor:
+Collect the hidden object.
+Complete room with x jumps
+Complete room without walking the opposite way
+Complete room in less than x seconds
+
+Complete all minor and major achievements in a room
+
+Kill enemy (Global Achievement)
+Collect x amount of hidden objects (Tiered global achievement)
+Complete x amount of rooms (Tiered global achievement)
+Complete x amount of puzzles (Tiered global achievement)
+Complete x amount of achievements (Tiered global achievement)
+Complete x amount of 'All achievements in a room' Achievement (Tiered global achievement)
+Kill x amount of enemies (Tiered global achievement)
+Complete a streak of 'All achievements in a room' (Tiered global achievement, repeatable)
+Complete a streak of 'x amount of jumps' (Tiered global achievement, repeatable)
+Complete a streak of 'room in less than x seconds (Tiered global achievement, repeatable)
+Complete a streak of 'all hiddeno objects in the room' (Tiered global achievement, repeatable)
+
+Chance for a random unique encounter:
+Boss
+Music puzzle
+
+Every room can have some random modifiers depending on difficulty or length of run.
+
+Game:
+Player (Movement)
+Achievement_Manager (Holds Achievements)
+Room_Manager (Holds Room information)
