@@ -44,12 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Completed: 0
-  Points: 30
   Buttons: []
   OpenButtonSprite: {fileID: 21300000, guid: 4114f5a8a27408f47bdbc57c4e1a2c83, type: 3}
   ClosedButtonSprite: {fileID: 21300000, guid: c72587cd41d06c54f83e18a667722723, type: 3}
   NumberSpriteList:
-  - {fileID: 21300000, guid: c3c7a77b1af71ab49a9bd099067ae635, type: 3}
-  - {fileID: 21300000, guid: 123d870f5352c9245906b8d1de6831f0, type: 3}
-  - {fileID: 21300000, guid: f549e2177c294c74c905372b1e71ac52, type: 3}
+  - {fileID: 21300000, guid: 9e2926585946ffb4e93a9208b2374013, type: 3}
+  - {fileID: 21300000, guid: 77896e740801cf4459e0a59122d40679, type: 3}
+  - {fileID: 21300000, guid: 0b62efac2e84c504498aed4fc940be54, type: 3}
   currentButton: 0

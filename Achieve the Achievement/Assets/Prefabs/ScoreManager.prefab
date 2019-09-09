@@ -44,5 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StarterPoints: 0
-  CurrentPoints: 0
   ScoreText: {fileID: 0}
