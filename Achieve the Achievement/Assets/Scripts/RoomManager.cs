@@ -12,9 +12,11 @@ public class RoomManager : MonoBehaviour
 {
     public List<RoomBase> Rooms;
     public RoomBase ActiveRoom;
-    public int ActiveRoomNumber;
+    public int ActiveRoomNumber = 0;
     public GameObject Player;
     public ScoreManager _ScoreManager;
+
+    LevelFader levelFader;
 
     Object[] puzzleRooms;
     Object[] enemyRooms;
@@ -29,31 +31,38 @@ public class RoomManager : MonoBehaviour
 
     void Awake()
     {
+        _ScoreManager = FindObjectOfType<ScoreManager>();
+        levelFader = GetComponent<LevelFader>();
         //Load all room prefabs from the resources folder
         puzzleRooms = Resources.LoadAll("Rooms/PuzzleRooms", typeof(GameObject));
         enemyRooms = Resources.LoadAll("Rooms/EnemyRooms", typeof(GameObject));
         collectibleRooms = Resources.LoadAll("Rooms/CollectibleRooms", typeof(GameObject));
-        _ScoreManager = FindObjectOfType<ScoreManager>();
         Rooms = new List<RoomBase>();
     }
 
     void Start()
     {
         //Reset variables, spawn the player and replace the prefab with the instantiated player.
-        ActiveRoomNumber = 0;
-        GoToNextLevel();
+        StartCoroutine(GoToNextLevel());
 
-        Player = Instantiate(Player, new Vector3(0, 0), Quaternion.identity);
-        SpawnPlayer(ActiveRoom.SpawnPoint);
+        Player = Instantiate(Player, ActiveRoom.SpawnPoint.transform.position, Quaternion.identity);
     }
 
-    //This is called by the teleporter when the player steps in it.
-    public void GoToNextLevel()
+    public IEnumerator GoToNextLevel()
     {
+
+        if(ActiveRoomNumber != 0)
+        {
+            yield return levelFader.FadeRoutine(LevelFader.FadeDirection.In);
+            Rooms[ActiveRoomNumber - 1].gameObject.SetActive(false);
+        }
+
         //Set the HighRoom value to the current completed room, not the next one to enter.
         ApplicationModel.HighRoom = ActiveRoomNumber;
+
         //Increase the roomnumber
         ActiveRoomNumber++;
+
         //Simple level check used to ensure the first 3 levels are always an enemy, collectible and puzzle before the timer starts
         switch (ActiveRoomNumber)
         {
@@ -61,25 +70,28 @@ public class RoomManager : MonoBehaviour
                 GenerateRoom(new Vector2(0, 0), MajorAchievementTypes.Puzzle);
                 break;
             case 2:
-                GenerateRoom(Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, 10)), MajorAchievementTypes.Enemy);
+                GenerateRoom(new Vector2(0, 0), MajorAchievementTypes.Enemy);
                 break;
             case 3:
-                GenerateRoom(Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, 10)), MajorAchievementTypes.Collectible);
+                GenerateRoom(new Vector2(0, 0), MajorAchievementTypes.Collectible);
                 break;
             case 4:
-                GenerateRoom(Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, 10)), (MajorAchievementTypes)Random.Range(0, 2));
+                GenerateRoom(new Vector2(0, 0), (MajorAchievementTypes)Random.Range(0, 2));
                 //Start the timer at room 4
                 _ScoreManager.StartTimer();
                 break;
             default:
                 //After that just randomly keep spawning random rooms.
-                GenerateRoom(Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, 10)), (MajorAchievementTypes)Random.Range(0, 2));
+                GenerateRoom(new Vector2(0, 0), (MajorAchievementTypes)Random.Range(0, 2));
                 break;
         }
 
+        //Because Active room starts at 1 and arrays at 0
         ActiveRoom = Rooms[ActiveRoomNumber - 1];
         //Spawn the player in the active room.
         SpawnPlayer(ActiveRoom.SpawnPoint);
+
+        yield return levelFader.FadeRoutine(LevelFader.FadeDirection.Out);
     }
 
     public void SpawnPlayer(SpawnPoint spawnPoint)
@@ -109,5 +121,4 @@ public class RoomManager : MonoBehaviour
 
         //go.transform.parent = transform;
     }
-
 }

@@ -30,7 +30,7 @@ public class Teleporter : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
         Activated = false;
     }
@@ -40,8 +40,8 @@ public class Teleporter : MonoBehaviour
     {
         if (col.transform.tag == "Player" && Activated)
         {
-            FindObjectOfType<RoomManager>().GoToNextLevel();
-            Camera.main.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(1.5f, 0.5f, 0));
+            StartCoroutine(FindObjectOfType<RoomManager>().GoToNextLevel());
+            //FindObjectOfType<RoomManager>().GoToNextLevel();
         }
     }
 }
