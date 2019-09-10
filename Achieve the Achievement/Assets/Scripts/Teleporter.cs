@@ -40,7 +40,7 @@ public class Teleporter : MonoBehaviour
     {
         if (col.transform.tag == "Player" && Activated)
         {
-            StartCoroutine(FindObjectOfType<RoomManager>().GoToNextLevel());
+            FindObjectOfType<RoomManager>().GoToNextLevel();
             //FindObjectOfType<RoomManager>().GoToNextLevel();
         }
     }

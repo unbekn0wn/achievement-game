@@ -9,14 +9,22 @@ using UnityEngine;
 public class AchievementCollectible : AchievementBase
 {
     public const Type AchievementType = Type.Major;
+    Collectible[] collectibles;
 
-    void OnTriggerEnter2D(Collider2D col)
+    private void Awake()
     {
-        if (col.transform.tag == "Player")
+        collectibles = GetComponentsInChildren<Collectible>();
+    }
+
+    public void CollectedItem()
+    {
+        foreach(Collectible c in collectibles)
         {
-            AchievementBase achievement = GetComponentInParent<AchievementBase>();
-            if (!achievement.Completed)
-                achievement.OnComplete();
+            if (c.Collected == false)
+                return;
+
+            if(!Completed)
+                OnComplete();
         }
     }
 }

@@ -38,22 +38,20 @@ public class RoomManager : MonoBehaviour
         enemyRooms = Resources.LoadAll("Rooms/EnemyRooms", typeof(GameObject));
         collectibleRooms = Resources.LoadAll("Rooms/CollectibleRooms", typeof(GameObject));
         Rooms = new List<RoomBase>();
+
+        Player = Instantiate(Player, new Vector2(0, 0), Quaternion.identity);
     }
 
     void Start()
     {
         //Reset variables, spawn the player and replace the prefab with the instantiated player.
-        StartCoroutine(GoToNextLevel());
-
-        Player = Instantiate(Player, ActiveRoom.SpawnPoint.transform.position, Quaternion.identity);
+        GoToNextLevel();
     }
 
-    public IEnumerator GoToNextLevel()
+    public void GoToNextLevel()
     {
-
-        if(ActiveRoomNumber != 0)
+        if (ActiveRoomNumber != 0)
         {
-            yield return levelFader.FadeRoutine(LevelFader.FadeDirection.In);
             Rooms[ActiveRoomNumber - 1].gameObject.SetActive(false);
         }
 
@@ -88,10 +86,9 @@ public class RoomManager : MonoBehaviour
 
         //Because Active room starts at 1 and arrays at 0
         ActiveRoom = Rooms[ActiveRoomNumber - 1];
+
         //Spawn the player in the active room.
         SpawnPlayer(ActiveRoom.SpawnPoint);
-
-        yield return levelFader.FadeRoutine(LevelFader.FadeDirection.Out);
     }
 
     public void SpawnPlayer(SpawnPoint spawnPoint)

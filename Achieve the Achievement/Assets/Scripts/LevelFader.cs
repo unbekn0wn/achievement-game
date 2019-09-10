@@ -18,7 +18,9 @@ public class LevelFader : MonoBehaviour
     {
         float alpha = (fadeDirection == FadeDirection.Out) ? 1 : 0;
         float fadeEndValue = (fadeDirection == FadeDirection.Out) ? 0 : 1;
-        if(fadeDirection == FadeDirection.Out)
+
+        Debug.Log(fadeEndValue);
+        if (fadeDirection == FadeDirection.Out)
         {
             while (alpha >= fadeEndValue)
             {
@@ -35,6 +37,7 @@ public class LevelFader : MonoBehaviour
                 SetColorImage(ref alpha, fadeDirection);
                 yield return null;
             }
+            FadeImage.color = new Color(FadeImage.color.r, FadeImage.color.g, FadeImage.color.b, alpha);
         }
     }
 
